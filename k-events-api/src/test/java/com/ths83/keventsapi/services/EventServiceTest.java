@@ -3,6 +3,7 @@ package com.ths83.keventsapi.services;
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
 import com.ths83.keventsapi.fixtures.EventFixtures;
 import com.ths83.keventsapi.model.Event;
+import com.ths83.keventsapi.model.EventsPagination;
 import com.ths83.keventsapi.repositories.EventRepository;
 import com.ths83.keventsapi.utils.EventFormatter;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ import static org.mockito.Mockito.when;
 class EventServiceTest {
 
 	public static final String NEW_NAME = "NEW";
+	private static final String SIZE_ERROR_MSG = "Page size must not be less than one!";
 
 	@Mock
 	private EventRepository repository;
@@ -34,7 +38,6 @@ class EventServiceTest {
 	@InjectMocks
 	private EventService service;
 
-	// create with null
 	@Test
 	void testWithNullEvent() {
 		// Act
@@ -44,7 +47,6 @@ class EventServiceTest {
 		verifyNoInteractions(repository);
 	}
 
-	// create with empty
 	@Test
 	void testWithEmptyEvent() {
 		// Act
@@ -54,7 +56,6 @@ class EventServiceTest {
 		verifyNoInteractions(repository);
 	}
 
-	// create with invalid
 	@Test
 	void testWithInvalidEvent() {
 		// Act
@@ -65,7 +66,6 @@ class EventServiceTest {
 		verifyNoInteractions(repository);
 	}
 
-	// create with non formatted event
 	@Test
 	void testWithNonFormattedEvent() {
 		// Arrange
@@ -88,7 +88,6 @@ class EventServiceTest {
 		verify(repository).save(any());
 	}
 
-	// create with formatted event
 	@Test
 	void testWithFormattedEvent() {
 		// Arrange
@@ -107,7 +106,6 @@ class EventServiceTest {
 		verify(repository).save(any());
 	}
 
-	// create with existing event in db
 	@Test
 	void testWithDuplicatedEvent() {
 		// Arrange
@@ -122,7 +120,6 @@ class EventServiceTest {
 		verify(repository, never()).save(any());
 	}
 
-	// create with non-existing event in db
 	@Test
 	void testWithNewEvent() {
 		// Arrange
@@ -139,6 +136,62 @@ class EventServiceTest {
 
 		verify(repository).findEventsByName(any());
 		verify(repository).save(any());
+	}
+
+	@Test
+	void testGetByMostRecentStartDateWithNoPage() {
+		// Act
+		final var exception = assertThrows(IllegalArgumentException.class, () -> service.getByMostRecentStartDate(0, 0));
+
+		// Assert
+		assertEquals(SIZE_ERROR_MSG, exception.getMessage());
+	}
+
+	@Test
+	void testGetByMostRecentStartDate() {
+		// Arrange
+		final var pageEvents = EventFixtures.getPageEvents();
+		when(repository.findAllByOrderByStartDateDesc(PageRequest.of(0, 2))).thenReturn(pageEvents);
+
+		// Act
+		final var result = service.getByMostRecentStartDate(0, 2);
+
+		// Assert
+		assertGetHelper(result, pageEvents);
+	}
+
+	@Test
+	void testGetByMostRecentStartDateWithMoreThanTwoElements() {
+		// Arrange
+		final var pageEvents = EventFixtures.getPageEvents();
+		when(repository.findAllByOrderByStartDateDesc(PageRequest.of(0, 3))).thenReturn(pageEvents);
+
+		// Act
+		final var result = service.getByMostRecentStartDate(0, 3);
+
+		// Assert
+		assertGetHelper(result, pageEvents);
+	}
+
+	private void assertGetHelper(final EventsPagination result, final Page<Event> pageEvents) {
+		assertEquals(2, result.getEvents().size());
+		result.getEvents().forEach(ev -> pageEvents.getContent().contains(ev));
+		assertEquals(pageEvents.getTotalElements(), result.getTotalEvents());
+		assertEquals(pageEvents.getTotalPages(), result.getTotalPages());
+		assertEquals(pageEvents.getNumber(), result.getCurrentPage());
+	}
+
+	@Test
+	void testGetByMostRecentStartDateWithoutResult() {
+		// Arrange
+		when(repository.findAllByOrderByStartDateDesc(PageRequest.of(1, 3)))
+				.thenReturn(EventFixtures.getEmptyPageEvents());
+
+		// Act
+		final var result = service.getByMostRecentStartDate(1, 3);
+
+		// Assert
+		assertEquals(0, result.getEvents().size());
 	}
 
 }

@@ -2,16 +2,17 @@ package com.ths83.keventsapi.services;
 
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
 import com.ths83.keventsapi.model.Event;
+import com.ths83.keventsapi.model.EventsPagination;
 import com.ths83.keventsapi.repositories.EventRepository;
 import com.ths83.keventsapi.utils.EventFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class EventService {
 	 * Format and store the given event to the database.
 	 *
 	 * @param event The event to save.
-	 * @return The saved event.
+	 * @return {@link Event} The saved event.
 	 * @throws EventAlreadyExistsException If the exact same event (same fields) is already present, this exception is thrown and the event is not saved.
 	 */
 	public Event create(@NotNull @Valid final Event event) {
@@ -54,12 +55,24 @@ public class EventService {
 		return repository.findEventsByName(name).contains(event);
 	}
 
-	// TODO order + pagination + tests
-	public List<Event> get() {
-		log.info("Retrieving all events...");
-		final var events = repository.findAll();
-		log.info("Found {} event(s)", events.size());
-		return events;
+	/**
+	 * Retrieve events by most recent start date, using a pagination to optimize performance and usability.
+	 *
+	 * @param page The selected page.
+	 * @param size The desired number of events to retrieve.
+	 * @return {@link EventsPagination}
+	 * The desired events, the selected page, the total number of elements, the total number of pages.
+	 */
+	public EventsPagination getByMostRecentStartDate(final int page, final int size) {
+		log.info("Retrieving {} event(s) by most recent date from page {}...", size, page);
+		final var events = repository.findAllByOrderByStartDateDesc(PageRequest.of(page, size));
+		log.info("Found {} event(s) by most recent date from page {}", events.getNumberOfElements(), page);
+
+		return EventsPagination.builder()
+				.currentPage(events.getNumber())
+				.totalEvents(events.getTotalElements())
+				.totalPages(events.getTotalPages())
+				.events(events.getContent()).build();
 	}
 
 }

@@ -1,9 +1,12 @@
 package com.ths83.keventsapi.utils;
 
 import com.ths83.keventsapi.model.Event;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class EventFormatter {
 
 	/**

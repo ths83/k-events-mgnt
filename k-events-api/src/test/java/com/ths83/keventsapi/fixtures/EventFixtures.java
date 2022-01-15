@@ -1,8 +1,15 @@
 package com.ths83.keventsapi.fixtures;
 
 import com.ths83.keventsapi.model.Event;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
+import java.util.List;
+
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class EventFixtures {
 
 	private static final String DESCRIPTION = "desc";
@@ -56,5 +63,17 @@ public class EventFixtures {
 		event.setEndDate(ZonedDateTimeFixtures.getZonedDateTime());
 
 		return event;
+	}
+
+	public static Page<Event> getPageEvents() {
+		return new PageImpl<>(EventFixtures.getEvents());
+	}
+
+	public static Page<Event> getEmptyPageEvents() {
+		return new PageImpl<>(List.of());
+	}
+
+	static List<Event> getEvents() {
+		return List.of(get(), getWithNoName());
 	}
 }
