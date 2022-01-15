@@ -1,3 +1,9 @@
+# Mongo DB
+spring:
+  data:
+    mongodb:
+      database: "events"
+
 # Displays error messages
 server:
   error:

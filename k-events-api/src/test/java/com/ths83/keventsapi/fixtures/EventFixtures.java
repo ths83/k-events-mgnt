@@ -6,8 +6,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class EventFixtures {
 
 	private static final String DESCRIPTION = "desc";
-	private static final String START_DATE = "start";
-	private static final String END_DATE = "end";
 	private static final String NAME = "name";
 	private static final String NAME_WITH_SPACES = "    name      ";
 	private static final String DESCRIPTION_WITH_SPACES = "  desc    ";
@@ -54,8 +52,8 @@ public class EventFixtures {
 		final var event = new Event();
 		event.setName(NAME);
 		event.setDescription(DESCRIPTION);
-		event.setStartDate(START_DATE);
-		event.setEndDate(END_DATE);
+		event.setStartDate(ZonedDateTimeFixtures.getZonedDateTime());
+		event.setEndDate(ZonedDateTimeFixtures.getZonedDateTime());
 
 		return event;
 	}

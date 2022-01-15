@@ -2,6 +2,5 @@
 spring:
   data:
     mongodb:
-      database: "events"
       host: localhost
       port: 27017

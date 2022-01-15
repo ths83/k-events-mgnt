@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.ZonedDateTime;
 
 @Setter
 @Getter
@@ -21,11 +23,11 @@ public class Event {
 	@NotBlank(message = "Event description must not be blank")
 	private String description;
 
-	@NotBlank(message = "Event startDate cannot be blank")
-	private String startDate;
+	@NotNull(message = "Event startDate cannot be blank")
+	private ZonedDateTime startDate;
 
-	@NotBlank(message = "Event endDate cannot be blank")
-	private String endDate;
+	@NotNull(message = "Event endDate cannot be blank")
+	private ZonedDateTime endDate;
 
 	public Event() {
 		super();
