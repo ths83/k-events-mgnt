@@ -1,0 +1,4 @@
+# Displays error messages
+server:
+  error:
+    include-message: always
