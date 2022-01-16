@@ -1,4 +1,4 @@
-package com.ths83.keventsapi.utils;
+package com.ths83.keventsapi.helper;
 
 import com.ths83.keventsapi.fixtures.EventFixtures;
 import com.ths83.keventsapi.model.Event;
@@ -12,32 +12,32 @@ class EventFormatterTest {
 	@Test
 	void testFormatWithNullEvent_NPE() {
 		// Act
-		assertThrows(NullPointerException.class, () -> EventFormatter.format(null));
+		assertThrows(NullPointerException.class, () -> EventFormatterHelper.format(null));
 	}
 
 	@Test
 	void testFormatWithEmptyEvent_NPE() {
 		// Act
-		assertThrows(NullPointerException.class, () -> EventFormatter.format(new Event()));
+		assertThrows(NullPointerException.class, () -> EventFormatterHelper.format(new Event()));
 	}
 
 	@Test
 	void testFormatWithNoNameEvent_NPE() {
 		// Act
-		assertThrows(NullPointerException.class, () -> EventFormatter.format(EventFixtures.getWithNoName()));
+		assertThrows(NullPointerException.class, () -> EventFormatterHelper.format(EventFixtures.getWithNoName()));
 	}
 
 	@Test
 	void testFormatWithNoDescriptionEvent_NPE() {
 		// Act
-		assertThrows(NullPointerException.class, () -> EventFormatter.format(EventFixtures.getWithNoDescription()));
+		assertThrows(NullPointerException.class, () -> EventFormatterHelper.format(EventFixtures.getWithNoDescription()));
 	}
 
 	@Test
 	void testFormatWithSpaces() {
 		// Act
 		final var expected = EventFixtures.get();
-		final var formattedEvent = EventFormatter.format(EventFixtures.getToTrim());
+		final var formattedEvent = EventFormatterHelper.format(EventFixtures.getToTrim());
 
 		// Assert
 		assertEventHelper(expected, formattedEvent);
@@ -47,7 +47,7 @@ class EventFormatterTest {
 	void testFormat() {
 		// Act
 		final var event = EventFixtures.get();
-		final var formattedEvent = EventFormatter.format(event);
+		final var formattedEvent = EventFormatterHelper.format(event);
 
 		// Assert
 		assertEventHelper(event, formattedEvent);

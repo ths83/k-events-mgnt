@@ -2,10 +2,10 @@ package com.ths83.keventsapi.services;
 
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
 import com.ths83.keventsapi.exceptions.EventDateException;
+import com.ths83.keventsapi.helper.EventFormatterHelper;
 import com.ths83.keventsapi.model.Event;
 import com.ths83.keventsapi.model.EventsResult;
 import com.ths83.keventsapi.repositories.EventRepository;
-import com.ths83.keventsapi.utils.EventFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +33,7 @@ public class EventService {
 	 */
 	public Event create(@NotNull @Valid final Event event) {
 
-		final var formattedEvent = EventFormatter.format(event);
+		final var formattedEvent = EventFormatterHelper.format(event);
 		final var name = formattedEvent.getName();
 
 		log.info("Saving event '{}'...", name);

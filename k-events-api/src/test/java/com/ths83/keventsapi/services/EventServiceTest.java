@@ -3,10 +3,10 @@ package com.ths83.keventsapi.services;
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
 import com.ths83.keventsapi.exceptions.EventDateException;
 import com.ths83.keventsapi.fixtures.EventFixtures;
+import com.ths83.keventsapi.helper.EventFormatterHelper;
 import com.ths83.keventsapi.model.Event;
 import com.ths83.keventsapi.model.EventsResult;
 import com.ths83.keventsapi.repositories.EventRepository;
-import com.ths83.keventsapi.utils.EventFormatter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,7 +71,7 @@ class EventServiceTest {
 	void testWithNonFormattedEvent() {
 		// Arrange
 		final var event = EventFixtures.getToTrim();
-		final var formattedEvent = EventFormatter.format(event);
+		final var formattedEvent = EventFormatterHelper.format(event);
 
 		when(repository.findEventsByName(any())).thenReturn(List.of());
 		when(repository.save(any())).thenReturn(formattedEvent);
@@ -92,7 +92,7 @@ class EventServiceTest {
 	@Test
 	void testWithFormattedEvent() {
 		// Arrange
-		final var formattedEvent = EventFormatter.format(EventFixtures.get());
+		final var formattedEvent = EventFormatterHelper.format(EventFixtures.get());
 
 		when(repository.findEventsByName(any())).thenReturn(List.of());
 		when(repository.save(any())).thenReturn(formattedEvent);

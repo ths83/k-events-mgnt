@@ -1,4 +1,4 @@
-package com.ths83.keventsapi.utils;
+package com.ths83.keventsapi.helper;
 
 import com.ths83.keventsapi.model.Event;
 import lombok.AccessLevel;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.constraints.NotNull;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class EventFormatter {
+public class EventFormatterHelper {
 
 	/**
 	 * Format event by trimming name and description.
