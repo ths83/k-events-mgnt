@@ -46,7 +46,7 @@ const NewEventForm = () => {
   const hasErrors = dateError || containsNetworkError;
 
   return (
-    <div>
+    <>
       <Title level={3}>New event form</Title>
       <Formik
         initialValues={initialValues}
@@ -200,7 +200,7 @@ const NewEventForm = () => {
           </Form>
         )}
       </Formik>
-    </div>
+    </>
   );
 };
 

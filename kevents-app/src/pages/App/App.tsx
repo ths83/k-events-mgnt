@@ -4,13 +4,18 @@ import Layout, { Content, Footer } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import Text from "antd/lib/typography/Text";
 import React, { useState } from "react";
-import { MENU_OPTIONS } from "../../constants/MenuConstants";
+import Events from "../../components/Events/Events";
 import NewEventForm from "../../components/NewEventForm/NewEventForm";
 import "./App.css";
 
 const App = () => {
+  const menuOptions = {
+    CREATE: "1",
+    LIST: "2",
+  };
+
   const [collapsed, setCollapse] = useState(false);
-  const [defaultOption, setDefaultOption] = useState(MENU_OPTIONS.CREATE);
+  const [defaultOption, setDefaultOption] = useState(menuOptions.CREATE);
 
   return (
     <Layout className="layout">
@@ -27,17 +32,17 @@ const App = () => {
         <Menu theme="dark" defaultSelectedKeys={[defaultOption]} mode="inline">
           <Menu.Item
             id="newEventOption"
-            key={MENU_OPTIONS.CREATE}
+            key={menuOptions.CREATE}
             icon={<PlusOutlined />}
-            onClick={() => setDefaultOption(MENU_OPTIONS.CREATE)}
+            onClick={() => setDefaultOption(menuOptions.CREATE)}
           >
             New event
           </Menu.Item>
           <Menu.Item
             id="listEventsOption"
-            key={MENU_OPTIONS.LIST}
+            key={menuOptions.LIST}
             icon={<AlignLeftOutlined />}
-            onClick={() => setDefaultOption(MENU_OPTIONS.LIST)}
+            onClick={() => setDefaultOption(menuOptions.LIST)}
           >
             List events
           </Menu.Item>
@@ -45,11 +50,7 @@ const App = () => {
       </Sider>
       <Layout className="site-layout">
         <Content className="content">
-          {defaultOption === MENU_OPTIONS.CREATE ? (
-            <NewEventForm />
-          ) : (
-            <p>This is text 2</p>
-          )}
+          {defaultOption === menuOptions.CREATE ? <NewEventForm /> : <Events />}
         </Content>
         <Footer id="footer" className="footer">
           ©2022 Created by Thomas Perron
