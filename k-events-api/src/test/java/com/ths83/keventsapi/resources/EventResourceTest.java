@@ -1,6 +1,7 @@
 package com.ths83.keventsapi.resources;
 
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
+import com.ths83.keventsapi.exceptions.EventDateException;
 import com.ths83.keventsapi.fixtures.EventFixtures;
 import com.ths83.keventsapi.fixtures.EventsResultFixtures;
 import com.ths83.keventsapi.services.EventService;
@@ -25,7 +26,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class EventResourceTest {
 
-	private static final String ERROR_MSG = "error";
+	private static final String ALREADY_EXISTS_ERROR_MSG = "The event already exists";
+	private static final String DATE_ERROR_MSG = "The start date is greater than the end date";
 
 	@Mock
 	private EventService service;
@@ -50,14 +52,28 @@ class EventResourceTest {
 	@Test
 	void testCreateWithDuplicatedEvent() {
 		// Arrange
-		when(service.create(any())).thenThrow(new EventAlreadyExistsException(ERROR_MSG));
+		when(service.create(any())).thenThrow(new EventAlreadyExistsException());
 
 		// Act
 		final var exception = assertThrows(ResponseStatusException.class, () -> resource.create(EventFixtures.get()));
 
 		// Assert
 		assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-		assertEquals(ERROR_MSG, exception.getReason());
+		assertEquals(ALREADY_EXISTS_ERROR_MSG, exception.getReason());
+		verify(service).create(any());
+	}
+
+	@Test
+	void testCreateWithDateExceptionEvent() {
+		// Arrange
+		when(service.create(any())).thenThrow(new EventDateException());
+
+		// Act
+		final var exception = assertThrows(ResponseStatusException.class, () -> resource.create(EventFixtures.get()));
+
+		// Assert
+		assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+		assertEquals(DATE_ERROR_MSG, exception.getReason());
 		verify(service).create(any());
 	}
 

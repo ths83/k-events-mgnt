@@ -1,9 +1,10 @@
 package com.ths83.keventsapi.services;
 
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
+import com.ths83.keventsapi.exceptions.EventDateException;
 import com.ths83.keventsapi.fixtures.EventFixtures;
 import com.ths83.keventsapi.model.Event;
-import com.ths83.keventsapi.model.EventsPagination;
+import com.ths83.keventsapi.model.EventsResult;
 import com.ths83.keventsapi.repositories.EventRepository;
 import com.ths83.keventsapi.utils.EventFormatter;
 import org.junit.jupiter.api.Assertions;
@@ -121,6 +122,20 @@ class EventServiceTest {
 	}
 
 	@Test
+	void testWithDateErrorEvent() {
+		// Arrange
+		final var event = EventFixtures.getWithGreaterStartDate();
+		when(repository.findEventsByName(any())).thenReturn(List.of(EventFixtures.get()));
+
+		// Act
+		assertThrows(EventDateException.class, () -> service.create(event));
+
+		// Assert
+		verify(repository).findEventsByName(any());
+		verify(repository, never()).save(any());
+	}
+
+	@Test
 	void testWithNewEvent() {
 		// Arrange
 		final var event = EventFixtures.get();
@@ -173,7 +188,7 @@ class EventServiceTest {
 		assertGetHelper(result, pageEvents);
 	}
 
-	private void assertGetHelper(final EventsPagination result, final Page<Event> pageEvents) {
+	private void assertGetHelper(final EventsResult result, final Page<Event> pageEvents) {
 		assertEquals(2, result.getEvents().size());
 		result.getEvents().forEach(ev -> pageEvents.getContent().contains(ev));
 		assertEquals(pageEvents.getTotalElements(), result.getTotalEvents());

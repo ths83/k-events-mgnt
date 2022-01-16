@@ -1,15 +1,15 @@
 package com.ths83.keventsapi.fixtures;
 
-import com.ths83.keventsapi.model.EventsPagination;
+import com.ths83.keventsapi.model.EventsResult;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class EventsResultFixtures {
 
-	public static EventsPagination get() {
+	public static EventsResult get() {
 		final var events = EventFixtures.getEvents();
-		return EventsPagination.builder()
+		return EventsResult.builder()
 				.events(events)
 				.totalEvents(events.size())
 				.currentPage(0)

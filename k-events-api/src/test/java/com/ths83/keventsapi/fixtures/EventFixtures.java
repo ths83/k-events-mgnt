@@ -14,6 +14,7 @@ public class EventFixtures {
 
 	private static final String DESCRIPTION = "desc";
 	private static final String NAME = "name";
+	private static final String OTHER_NAME = "otherName";
 	private static final String NAME_WITH_SPACES = "    name      ";
 	private static final String DESCRIPTION_WITH_SPACES = "  desc    ";
 	private static final int TOO_LONG_NAME = 32;
@@ -55,12 +56,19 @@ public class EventFixtures {
 		return event;
 	}
 
+	public static Event getWithGreaterStartDate() {
+		final var event = get();
+		event.setName(OTHER_NAME);
+		event.setStartDate(ZonedDateTimeFixtures.getZonedDateTime().plusDays(1));
+		return event;
+	}
+
 	public static Event get() {
 		final var event = new Event();
 		event.setName(NAME);
 		event.setDescription(DESCRIPTION);
 		event.setStartDate(ZonedDateTimeFixtures.getZonedDateTime());
-		event.setEndDate(ZonedDateTimeFixtures.getZonedDateTime());
+		event.setEndDate(ZonedDateTimeFixtures.getZonedDateTime().plusHours(1));
 
 		return event;
 	}

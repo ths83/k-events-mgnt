@@ -1,8 +1,9 @@
 package com.ths83.keventsapi.services;
 
 import com.ths83.keventsapi.exceptions.EventAlreadyExistsException;
+import com.ths83.keventsapi.exceptions.EventDateException;
 import com.ths83.keventsapi.model.Event;
-import com.ths83.keventsapi.model.EventsPagination;
+import com.ths83.keventsapi.model.EventsResult;
 import com.ths83.keventsapi.repositories.EventRepository;
 import com.ths83.keventsapi.utils.EventFormatter;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class EventService {
 	 * @param event The event to save.
 	 * @return {@link Event} The saved event.
 	 * @throws EventAlreadyExistsException If the exact same event (same fields) is already present, this exception is thrown and the event is not saved.
+	 * @throws EventDateException          If the start date event is greater than the end date event.
 	 */
 	public Event create(@NotNull @Valid final Event event) {
 
@@ -45,9 +47,10 @@ public class EventService {
 
 	private void validateEvent(@NotNull Event event, String name) {
 		if (eventAlreadyExists(event, name)) {
-			final var error = "Event already exists";
-			log.error(error);
-			throw new EventAlreadyExistsException(error);
+			throw new EventAlreadyExistsException();
+		}
+		if (isStartDateGreaterThanEndDate(event)) {
+			throw new EventDateException();
 		}
 	}
 
@@ -55,24 +58,29 @@ public class EventService {
 		return repository.findEventsByName(name).contains(event);
 	}
 
+	private boolean isStartDateGreaterThanEndDate(@NotNull Event event) {
+		return event.getEndDate().compareTo(event.getStartDate()) < 0;
+	}
+
 	/**
 	 * Retrieve events by most recent start date, using a pagination to optimize performance and usability.
 	 *
 	 * @param page The selected page.
 	 * @param size The desired number of events to retrieve.
-	 * @return {@link EventsPagination}
+	 * @return {@link EventsResult}
 	 * The desired events, the selected page, the total number of elements, the total number of pages.
 	 */
-	public EventsPagination getByMostRecentStartDate(final int page, final int size) {
+	public EventsResult getByMostRecentStartDate(final int page, final int size) {
 		log.info("Retrieving {} event(s) by most recent date from page {}...", size, page);
 		final var events = repository.findAllByOrderByStartDateDesc(PageRequest.of(page, size));
 		log.info("Found {} event(s) by most recent date from page {}", events.getNumberOfElements(), page);
 
-		return EventsPagination.builder()
+		return EventsResult.builder()
 				.currentPage(events.getNumber())
 				.totalEvents(events.getTotalElements())
 				.totalPages(events.getTotalPages())
-				.events(events.getContent()).build();
+				.events(events.getContent())
+				.build();
 	}
 
 }

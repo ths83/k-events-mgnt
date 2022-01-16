@@ -1,6 +1,6 @@
 package com.ths83.keventsapi.resources;
 
-import com.ths83.keventsapi.exceptions.EventsException;
+import com.ths83.keventsapi.exceptions.EventsApiException;
 import com.ths83.keventsapi.model.Event;
 import com.ths83.keventsapi.model.EventsResult;
 import com.ths83.keventsapi.services.EventService;
@@ -41,7 +41,7 @@ public class EventResource {
 		log.info("Calling POST /events endpoint...");
 		try {
 			return service.create(event);
-		} catch (EventsException e) {
+		} catch (EventsApiException e) {
 			log.error(e.getMessage());
 			throw new ResponseStatusException(e.getStatus(), e.getMessage());
 		} catch (Exception e) {

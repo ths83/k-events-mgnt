@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class EventsPagination {
+public class EventsResult {
 
 	private List<Event> events;
 

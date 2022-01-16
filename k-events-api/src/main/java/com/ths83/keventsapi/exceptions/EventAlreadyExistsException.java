@@ -4,15 +4,11 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class EventAlreadyExistsException extends RuntimeException {
+public class EventAlreadyExistsException extends EventsApiException {
 
-	private final HttpStatus status;
+	private static final String ALREADY_EXISTS_ERROR = "The event already exists";
 
-	private final String message;
-
-	public EventAlreadyExistsException(final String error) {
-		super(error);
-		message = error;
-		status = HttpStatus.BAD_REQUEST;
+	public EventAlreadyExistsException() {
+		super(HttpStatus.BAD_REQUEST, ALREADY_EXISTS_ERROR);
 	}
 }
