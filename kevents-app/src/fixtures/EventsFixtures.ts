@@ -1,4 +1,4 @@
-import { EventsResult } from "../../eventsSlice";
+import { Event, EventsResult } from "../features/eventsSlice";
 
 export const expectedEventsResult: EventsResult = {
   currentPage: 0,
@@ -25,4 +25,11 @@ export const expectedEmptyEventsResult: EventsResult = {
   totalEvents: 0,
   totalPages: 0,
   events: [],
+};
+
+export const mockEvent: Event = {
+  name: "event1",
+  description: "description1",
+  startDate: "2022-01-16T02:17:19.464Z",
+  endDate: "2022-01-16T02:17:19.464Z",
 };

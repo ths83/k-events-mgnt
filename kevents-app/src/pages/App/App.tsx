@@ -3,9 +3,10 @@ import { Menu } from "antd";
 import Layout, { Content, Footer } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import Text from "antd/lib/typography/Text";
-import React, { useState } from "react";
-import Events from "../../components/Events/Events";
-import NewEventForm from "../../components/NewEventForm/NewEventForm";
+import React, { useEffect, useState } from "react";
+import Events from "../../components/events/Events";
+import NewEventForm from "../../components/newEventForm/NewEventForm";
+import { clearEvents } from "../../features/eventsSlice";
 import "./App.css";
 
 const App = () => {
@@ -16,6 +17,10 @@ const App = () => {
 
   const [collapsed, setCollapse] = useState(false);
   const [defaultOption, setDefaultOption] = useState(menuOptions.CREATE);
+
+  useEffect(() => {
+    clearEvents();
+  }, [defaultOption]);
 
   return (
     <Layout className="layout">

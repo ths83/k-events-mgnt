@@ -2,16 +2,24 @@ import { Button, DatePicker } from "antd";
 import Title from "antd/lib/typography/Title";
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { isEmpty } from "lodash";
+import { isEmpty, noop } from "lodash";
 import moment from "moment";
 import React, { useState } from "react";
 import * as Yup from "yup";
+import { datePattern } from "../../utils/date/dateHelper";
+import CustomErrorMessage from "../errorMessage/CustomErrorMessage";
 import "./newEventForm.css";
 
 const NewEventForm = () => {
   const requiredFieldErrorMsg = "This field is required";
   const nameErrorMsg = "Must be 32 characters or less";
-  const displayedDateFormat = "YYYY-MM-DD HH:mm";
+
+  const initialValues = {
+    name: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+  };
 
   const formValidationSchema = Yup.object().shape({
     name: Yup.string()
@@ -23,13 +31,6 @@ const NewEventForm = () => {
     startDate: Yup.string().required(requiredFieldErrorMsg).trim(),
     endDate: Yup.string().required(requiredFieldErrorMsg).trim(),
   });
-
-  const initialValues = {
-    name: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-  };
 
   const compareDates = (start: string | null, end: string | null) => {
     const isValid =
@@ -51,9 +52,7 @@ const NewEventForm = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={formValidationSchema}
-        onSubmit={(values) => {
-          // replaced by antd button, no longer needed but mandatory
-        }}
+        onSubmit={noop}
       >
         {({
           setErrors,
@@ -90,7 +89,7 @@ const NewEventForm = () => {
               <DatePicker
                 id="startDate"
                 showTime
-                format={displayedDateFormat}
+                format={datePattern}
                 onChange={(value) => {
                   setFieldValue("startDate", value?.toISOString());
                   compareDates(values.startDate, values.endDate);
@@ -110,7 +109,7 @@ const NewEventForm = () => {
               <DatePicker
                 id="endDate"
                 showTime
-                format={displayedDateFormat}
+                format={datePattern}
                 onChange={(value) => {
                   setFieldValue("endDate", value?.toISOString());
                   compareDates(values.startDate, values.endDate);
@@ -122,6 +121,7 @@ const NewEventForm = () => {
               />
               <ErrorMessage name="endDate" />
             </div>
+
             <div className="buttons">
               <Button
                 id="reset"
@@ -177,15 +177,13 @@ const NewEventForm = () => {
               </Button>
             </div>
             {hasErrors && (
-              <Title
-                level={5}
-                id="errorMessage"
-                className="notification"
-                type="danger"
-              >
-                {dateError && "End date must be more recent than start date!"}
-                {containsNetworkError && networkError}
-              </Title>
+              <CustomErrorMessage
+                message={
+                  dateError
+                    ? "End date must be more recent than start date!"
+                    : networkError
+                }
+              />
             )}
             {success && (
               <Title

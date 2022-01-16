@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders component 1`] = `
+<li
+  className="ant-list-item ant-list-item-no-flex"
+>
+  <div
+    className="ant-list-item-meta"
+  >
+    <div
+      className="ant-list-item-meta-content"
+    >
+      <h4
+        className="ant-list-item-meta-title"
+      >
+        event1
+      </h4>
+      <div
+        className="ant-list-item-meta-description"
+      >
+        description1
+      </div>
+    </div>
+  </div>
+  From Saturday 2022-01-15 21:17 to Saturday 2022-01-15 21:17
+</li>
+`;

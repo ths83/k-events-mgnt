@@ -1,10 +1,10 @@
 import store from "../../components/app/store";
 import { setEvents, clearEvents } from "../eventsSlice";
-import data from "./fixtures/data.json";
+import data from "../../fixtures/data.json";
 import {
   expectedEmptyEventsResult,
   expectedEventsResult,
-} from "./fixtures/EventsFixtures";
+} from "../../fixtures/EventsFixtures";
 
 test("should fetch events and clear reducer with success", () => {
   store.dispatch(setEvents(data));

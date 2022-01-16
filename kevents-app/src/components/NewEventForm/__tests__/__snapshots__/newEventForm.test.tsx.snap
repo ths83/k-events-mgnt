@@ -1,0 +1,218 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders component 1`] = `
+Array [
+  <h3
+    className="ant-typography"
+    onClick={[Function]}
+    style={
+      Object {
+        "WebkitLineClamp": undefined,
+      }
+    }
+  >
+    New event form
+  </h3>,
+  <form
+    action="#"
+    onReset={[Function]}
+    onSubmit={[Function]}
+  >
+    <div
+      className="input"
+    >
+      <h5
+        className="ant-typography"
+        id="eventNameTitle"
+        onClick={[Function]}
+        style={
+          Object {
+            "WebkitLineClamp": undefined,
+          }
+        }
+      >
+        Name
+      </h5>
+      <input
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Enter an event name"
+        value=""
+      />
+    </div>
+    <div
+      className="input"
+    >
+      <h5
+        className="ant-typography"
+        id="eventDescTitle"
+        onClick={[Function]}
+        style={
+          Object {
+            "WebkitLineClamp": undefined,
+          }
+        }
+      >
+        Description
+      </h5>
+      <input
+        name="description"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Enter an event description"
+        value=""
+      />
+    </div>
+    <div
+      className="input"
+    >
+      <h5
+        className="ant-typography"
+        id="eventStartDateTitle"
+        onClick={[Function]}
+        style={
+          Object {
+            "WebkitLineClamp": undefined,
+          }
+        }
+      >
+        Start Date
+      </h5>
+      <div
+        className="ant-picker"
+        onMouseUp={[Function]}
+      >
+        <div
+          className="ant-picker-input"
+        >
+          <input
+            autoComplete="off"
+            id="startDate"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            placeholder="Select date"
+            readOnly={true}
+            size={18}
+            title=""
+            value=""
+          />
+          <span
+            className="ant-picker-suffix"
+          >
+            <span
+              aria-label="calendar"
+              className="anticon anticon-calendar"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="calendar"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"
+                />
+              </svg>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="input"
+    >
+      <h5
+        className="ant-typography"
+        id="eventEndDateTitle"
+        onClick={[Function]}
+        style={
+          Object {
+            "WebkitLineClamp": undefined,
+          }
+        }
+      >
+        End Date
+      </h5>
+      <div
+        className="ant-picker"
+        onMouseUp={[Function]}
+      >
+        <div
+          className="ant-picker-input"
+        >
+          <input
+            autoComplete="off"
+            id="endDate"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            placeholder="Select date"
+            readOnly={true}
+            size={18}
+            title=""
+            value=""
+          />
+          <span
+            className="ant-picker-suffix"
+          >
+            <span
+              aria-label="calendar"
+              className="anticon anticon-calendar"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="calendar"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"
+                />
+              </svg>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="buttons"
+    >
+      <button
+        className="ant-btn ant-btn-primary ant-btn-round ant-btn-dangerous"
+        id="reset"
+        onClick={[Function]}
+        type="button"
+      >
+        <span>
+          Reset
+        </span>
+      </button>
+      <button
+        className="ant-btn ant-btn-primary ant-btn-round"
+        disabled={true}
+        id="submit"
+        onClick={[Function]}
+        type="button"
+      >
+        <span>
+          Submit
+        </span>
+      </button>
+    </div>
+  </form>,
+]
+`;

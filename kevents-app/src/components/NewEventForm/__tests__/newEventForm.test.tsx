@@ -1,6 +1,7 @@
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
 import NewEventForm from "../NewEventForm";
+import renderer from "react-test-renderer";
 
 const expectedTitle = "New event form";
 const expectedNameInputTitle = "Name";
@@ -12,8 +13,14 @@ const expectedSubmitButton = "Submit";
 
 const expectedNameInputPlaceholder = "Enter an event name";
 const expectedDescInputPlaceholder = "Enter an event description";
+const expectedDateInputPlaceholder = "Select date";
 
 const expectedRequiredFieldMsg = "This field is required";
+
+test("renders component", () => {
+  const item = renderer.create(<NewEventForm />).toJSON();
+  expect(item).toMatchSnapshot();
+});
 
 test("renders form", () => {
   render(<NewEventForm />);
@@ -31,6 +38,10 @@ test("renders form", () => {
   const resetButton = screen.getByText(expectedResetButton);
   const submitButton = screen.getByText(expectedSubmitButton);
 
+  const datePlaceholder = screen.getAllByPlaceholderText(
+    expectedDateInputPlaceholder
+  );
+
   expect(title).toBeInTheDocument();
   expect(name).toBeInTheDocument();
   expect(namePlaceholder).toBeInTheDocument();
@@ -40,6 +51,7 @@ test("renders form", () => {
   expect(endDate).toBeInTheDocument();
   expect(resetButton).toBeInTheDocument();
   expect(submitButton).toBeInTheDocument();
+  expect(datePlaceholder.length).toBe(2);
 });
 
 describe("Input", () => {

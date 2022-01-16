@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders component 1`] = `
+<h5
+  className="ant-typography ant-typography-danger message"
+  id="errorMessage"
+  onClick={[Function]}
+  style={
+    Object {
+      "WebkitLineClamp": undefined,
+    }
+  }
+>
+  
+</h5>
+`;
