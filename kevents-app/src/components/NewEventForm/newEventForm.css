@@ -1,0 +1,17 @@
+.input {
+  display: grid;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#reset {
+  margin-right: 2rem;
+}
+
+#submit {
+  margin-left: 2rem;
+}

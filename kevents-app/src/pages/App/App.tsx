@@ -4,7 +4,8 @@ import Layout, { Content, Footer } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import Text from "antd/lib/typography/Text";
 import React, { useState } from "react";
-import { MENU_OPTIONS } from "../constants/MenuConstants";
+import { MENU_OPTIONS } from "../../constants/MenuConstants";
+import NewEventForm from "../../components/NewEventForm/NewEventForm";
 import "./App.css";
 
 const App = () => {
@@ -45,7 +46,7 @@ const App = () => {
       <Layout className="site-layout">
         <Content className="content">
           {defaultOption === MENU_OPTIONS.CREATE ? (
-            <p>This is text 1</p>
+            <NewEventForm />
           ) : (
             <p>This is text 2</p>
           )}
