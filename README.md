@@ -28,6 +28,10 @@ Then http://localhost:3000
 - [mongodb](kubernetes/deploy_db.yml)
 - [kevents-app](kubernetes/deploy_ui.yml)
 
+#### Github Actions (K8s deployment not present)
+- [k-events-api](.github/workflows/api.yml)
+- [kevents-app](.github/workflows/ui.yml)
+
 ### k-events-api
 
 Back-end application using MongoDb as primary database to store events.

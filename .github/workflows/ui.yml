@@ -1,0 +1,20 @@
+name: UI CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build_docker_image:
+    name: Test and Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PWD }}
+      - name: Build image
+        run: docker build -t k-events-app:1.0.0 -f Dockerfile_APP .
+      - name: Tag
+        run: docker tag k-events-app:1.0.0 ${{ secrets.DOCKER_REPO }}/k-events-app:1.0.0
+      - name: Publish
+        run: docker push ${{ secrets.DOCKER_REPO }}/k-events-app:1.0.0
