@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories("com.ths83.keventsapi.repositories")
+@EnableMongoRepositories
 public class KEventsApiApplication {
 
 	public static void main(String[] args) {

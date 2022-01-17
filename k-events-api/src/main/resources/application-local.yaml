@@ -1,6 +1,7 @@
-# MONGODB
 spring:
   data:
     mongodb:
+      uri: mongodb://localhost:27017/events
+      database: "events"
       host: localhost
       port: 27017

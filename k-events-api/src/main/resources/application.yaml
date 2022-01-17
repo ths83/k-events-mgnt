@@ -1,8 +1,10 @@
-# Mongo DB
 spring:
   data:
     mongodb:
-      database: "events"
+      uri: mongodb://${MONGO_DB_HOST}:${MONGO_DB_PORT}/${MONGO_DB_NAME}
+      database: ${MONGO_DB_NAME}
+      host: ${MONGO_DB_HOST}
+      port: ${MONGO_DB_PORT}
 
 # Displays error messages
 server:
