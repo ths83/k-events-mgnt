@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: k-events
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    type: ui
+    app: k-events-app
+    namespace: k-events
+  name: cm_ui
+  namespace: k-events
+data:
+  api_url: "api:8080"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    type: ui
+    app: k-events-app
+    namespace: k-events
+    tag: 1.0.0
+  name: ui
+  namespace: k-events
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ui
+  template:
+    metadata:
+      labels:
+        name: ui
+    spec:
+      containers:
+        - image: k-events-app:1.0.0
+          name: ui
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+          env:
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: api_url
+                  name: cm_ui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    type: ui
+    app: k-events-app
+    namespace: k-events
+    tag: 1.0.0
+  name: ui
+  namespace: k-events
+spec:
+  selector:
+    name: ui
+  ports:
+    - port: 3000
+      name: ui
+      targetPort: 3000
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    type: ui
+    app: k-events-app
+    namespace: k-events
+    tag: 1.0.0
+  name: ui-ingress
+  namespace: k-events
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /yourpath # Please provide your path
+            pathType: Prefix
+            backend:
+              service:
+                name: ui
+                port:
+                  number: 3000

@@ -29,7 +29,9 @@ const Events = () => {
   const getEvents = (page: number) => {
     setNetworkError("");
     axios
-      .get(`http://localhost:8080/events?page=${page}&size=${defaultPageSize}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/events?page=${page}&size=${defaultPageSize}`
+      )
       .then((response) => dispatch(setEvents(response.data as EventsResult)))
       .catch((error) => setNetworkError(error.response.data.message));
   };

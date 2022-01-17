@@ -1,0 +1,17 @@
+## Build the application
+FROM node:17.3-alpine3.15 AS BUILDER
+WORKDIR /app
+COPY /kevents-app .
+RUN yarn install
+RUN yarn build
+
+##  Build the image
+FROM node:17.3-alpine3.15
+LABEL maintainer="Thomas Perron"
+LABEL version="1.0.0"
+LABEL name="kevents-app"
+RUN yarn global add serve
+WORKDIR /app
+COPY --from=BUILDER /app/build .
+EXPOSE 3000
+CMD ["serve", "-p", "3000", "-s", "."]

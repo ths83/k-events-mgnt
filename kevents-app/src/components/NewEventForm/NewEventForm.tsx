@@ -155,7 +155,7 @@ const NewEventForm = () => {
                 onClick={() => {
                   setSubmitting(true);
                   axios
-                    .post("http://localhost:8080/events", {
+                    .post(`${process.env.REACT_APP_API_URL}/events`, {
                       name: values.name,
                       description: values.description,
                       startDate: values.startDate,
