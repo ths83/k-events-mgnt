@@ -55,15 +55,20 @@ Front-end application consuming k-events-api to create and retrieve events.
 - Typescript
 - Docker
 - Antd for design library https://ant.design
+- Formik for forms https://formik.org
+- Redux Toolkit https://redux-toolkit.js.org
+- Axios https://axios-http.com
+- Date-fns for date management https://date-fns.org 
+- Lodash https://lodash.com
 
 #### Dockerfile
 [Dockerfile](Dockerfile_APP) _size ~ 186MB_
 
-## How to improve?
+## How to improve this project?
 
 ### UI
 - Use graphQL
-- Use SASS for cleaner css code
+- Use SASS for cleaner css code (variables...)
 
 ### API
 - Use graphQL
