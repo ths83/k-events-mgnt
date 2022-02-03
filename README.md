@@ -74,3 +74,29 @@ Front-end application consuming k-events-api to create and retrieve events.
 - Use graphQL
 - Use Quarkus for smaller footprint and better performance
 - Native compilation
+
+-----------------------------
+
+#### Original assignment (French)
+
+## Application de gestion d’événements
+
+L’objectif est d’avoir une application basique de gestion des événements.
+
+Un événement est caractérisé par son nom (32 caractères maximum), sa description et ses dates de début et de fin. Attention, les événements peuvent avoir lieu n’importe où dans le monde, n’oublie pas de prendre en compte la timezone.
+
+Le back-end est une API REST qui retourne du JSON. Il doit gérer les opérations suivantes :
+
+Créer un événement
+Lister les événements
+
+Le front-end doit permettre de :
+
+Créer un événement
+Lister les événements (optionnel)
+ 
+Optionnel: une fois cette application terminée prépare son déploiement en :
+
+Écrivant les Dockerfile qui construisent les applications front-end et back-end
+Écrivant les GitHub Action pour tester, builder et déployer dans Kubernetes
+Écrivant les manifests Kubernetes pour déployer les 2 applications avec un Ingress, on part du principe que le cluster possède un Nginx Ingress Controller
